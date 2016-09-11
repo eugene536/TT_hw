@@ -3,20 +3,10 @@
 
 using namespace std;
 
-string expression(const char *& s);
-string application(const char*& s);
-string atom(const char*& s);
-string variable(const char*& s);
 
 const string resources = "resources/";
 const string in_file   = resources + "task1.in";
 const string out_file  = resources + "task1.out";
-
-//expression  = application? '\' variable '.' expression
-//            | application
-//application = atom (' '* atom)*
-//atom        = '(' expression ')' | variable
-//variable    = ['a'..'z']['a'..'z','0'..'9','\'']*
 
 inline
 void skip_spaces(const char*& s) {
@@ -31,6 +21,8 @@ string variable(const char*& s) {
     skip_spaces(s);
     return res;
 }
+
+inline string expression(const char *& s);
 
 inline
 string atom(const char*& s) {
@@ -82,10 +74,8 @@ string expression(const char *& s) {
         return app;
 }
 
-const char* ss;
 inline string put_parentheses(string expr) {
     const char * s = expr.c_str();
-    ss = s;
     skip_spaces(s);
     string res = expression(s);
     assert(s == expr.c_str() + expr.size());
