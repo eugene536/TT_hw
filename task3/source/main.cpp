@@ -1,108 +1,64 @@
 #include <bits/stdc++.h>
-#include <cctype>
+
+#include "parser.h"
+#include "print_visitor.h"
+#include "hw1.h"
+#include "hw2.h"
+#include "hw3.h"
 
 using namespace std;
 
-string const task_number = "3";
 string const resources   = "resources/";
-string const in_file     = resources + "task" + task_number + ".in";
-string const out_file    = resources + "task" + task_number + ".out";
 
-set<string> free_v;
-set<string> binded_v;
-
-inline
-void skip_spaces(const char*& s) {
-    for (; isspace(*s); ++s);
+string in_file(std::string const & task_number) {
+#ifdef DEBUG
+    static_cast<void>(task_number);
+    return resources + "in";
+#else
+    return resources + "task" + task_number + ".in";
+#endif
 }
 
-inline
-string variable(const char*& s) {
-    assert(islower(*s));
-    string res(1, *s++);
-    for (char c = *s; islower(c) || isdigit(c) || c == '\''; res.push_back(c), c = *++s);
-    skip_spaces(s);
-    return res;
+string out_file(std::string const & task_number) {
+#ifdef DEBUG
+    static_cast<void>(task_number);
+    return resources + "out";
+#else
+    return resources + "task" + task_number + ".out";
+#endif
 }
 
-inline
-string expression(const char *& s);
-
-inline
-string atom(const char*& s) {
-    if (*s == '(') {
-        skip_spaces(++s);
-        string res = "(" + expression(s) + ")";
-        skip_spaces(s);
-        assert(*s == ')');
-        skip_spaces(++s);
-        return res;
-    }
-
-    string var = variable(s);
-    if (!binded_v.count(var)) {
-        free_v.insert(var);
-    }
-
-    return var;
+void print_expr(std::string const & expr) {
+    char const * f = expr.c_str();
+    char const * l = f + expr.size();
+    vertex_ptr_t v = parse(f, l);
+    print_visitor print_visitor;
+    v->accept(&print_visitor);
 }
 
-inline
-bool isatom(char c) {
-    return c == '(' || islower(c);
-}
+typedef std::string hw_main(std::string const &);
 
-inline
-string application(const char*& s) {
-    int cnt = 0;
-    string res = atom(s);
-    while (isatom(*s)) {
-        res += " " + atom(s) + ")";
-        cnt++;
-    }
+hw_main * hw_mains[] = {
+        hw1::main,
+        hw2::main,
+        hw3::main
+};
 
-    string parntss;
-    for (; cnt > 0; cnt--, parntss.push_back('('));
-    return parntss + res;
-}
+int main(int argc, char * argv[]) {
+    assert(1 < argc);
 
-inline
-string expression(const char *& s) {
-    string app;
-    if (isatom(*s))
-        app = application(s);
+    std::string const task_number(argv[1]);
+    int task_num = std::stoi(task_number) - 1;
 
-    if ('\\' == *s) {
-        skip_spaces(++s);
-        string var = variable(s);
-        binded_v.insert(var);
-        app += "(\\" + var + ". ";
-
-        assert('.' == *s);
-        skip_spaces(++s);
-        return "(" + app + expression(s) + "))";
-    } else
-        return app;
-}
-
-inline
-string put_parentheses(string expr) {
-    const char * s = expr.c_str();
-    skip_spaces(s);
-    string res = expression(s);
-    assert(s == expr.c_str() + expr.size());
-    return res;
-}
-
-int main() {
-    ifstream in(in_file);
+    ifstream in(in_file(task_number));
     string expr((istreambuf_iterator<char>(in)),
                  istreambuf_iterator<char>());
 
-    put_parentheses(expr);
-    ofstream out(out_file);
-    for (string s: free_v)
-        out << s << "\n";
+    hw_main * spec_main = hw_mains[task_num];
+
+    ofstream out(out_file(task_number));
+    std::string hw3_res = spec_main(expr);
+    out << hw3_res << std::endl;
 
     return 0;
 }

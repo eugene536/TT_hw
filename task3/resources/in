@@ -1,0 +1,16 @@
+y a [a := \f . f xi'']
+------HW1--------------
+x \x . x x \x . x y
+\a . b a
+a b c d
+\x . \y . \z . a
+------HW2--------------
+\x . \y . \z . a
+\asdf . \qwer'' . \a213123 . asdf \a999 . a999 a213123
+\asdf . \qwer'' . \a213123 . asdf' \a9999 . a999 a213123
+------HW3--------------
+y a [a := \f . f xi'']
+x \x . x x \x . x y [a := x x x \x . x x \x . x y]
+( \xzxcv . (( ( jlk''' ) ( xzxv ) ) ( ( \b . (( ( a ( b c ) ) ( d ) ) ( ( \e . (( \u . (( \g . (( ( u ) ( f ) ) ( g ))))))) ))) ))) [a := a]
+\xzxcv . jlk''' xzxv \b  . a b c d \e . \u . \g . u f g [a := a]
+\a . b a [b := \x . x y]
