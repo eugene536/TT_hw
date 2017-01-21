@@ -8,7 +8,6 @@
 #include <substitute_visitor.h>
 
 #include "hw3.h"
-#include "to_string_visitor.h"
 
 namespace hw3 {
     std::string main(std::string const &expr) {
@@ -35,9 +34,14 @@ namespace hw3 {
     }
 
     vertex_ptr_t substitute(vertex_ptr_t expr, variable_ptr_t var, vertex_ptr_t new_expr) {
+//        std::cerr << "substitute:"  << std::endl;
+//        std::cerr << "  expr: " << *expr << std::endl;
+//        std::cerr << "  var: " << *var << std::endl;
+//        std::cerr << "  new_expr: " << *new_expr << std::endl;
+
         substitute_visitor visitor(var, new_expr);
         expr->accept(&visitor);
 
-        return expr;
+        return visitor._res;
     }
 } // namespace hw3

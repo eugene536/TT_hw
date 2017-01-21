@@ -1,10 +1,15 @@
 #include <bits/stdc++.h>
 
+#ifdef _GTEST
+#  include <gtest/gtest.h>
+#endif
+
 #include "parser.h"
 #include "print_visitor.h"
 #include "hw1.h"
 #include "hw2.h"
 #include "hw3.h"
+#include "hw4.h"
 
 using namespace std;
 
@@ -41,10 +46,17 @@ typedef std::string hw_main(std::string const &);
 hw_main * hw_mains[] = {
         hw1::main,
         hw2::main,
-        hw3::main
+        hw3::main,
+        hw4::main
 };
 
 int main(int argc, char * argv[]) {
+
+#ifdef _GTEST
+    std::cout << "Run tests..." << std::endl;
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+#else
     assert(1 < argc);
 
     std::string const task_number(argv[1]);
@@ -54,11 +66,14 @@ int main(int argc, char * argv[]) {
     string expr((istreambuf_iterator<char>(in)),
                  istreambuf_iterator<char>());
 
+    std::cerr << "initial expression: " << std::endl;
+    print_expr(expr);
     hw_main * spec_main = hw_mains[task_num];
 
     ofstream out(out_file(task_number));
-    std::string hw3_res = spec_main(expr);
-    out << hw3_res << std::endl;
+    std::string res = spec_main(expr);
+    out << res << std::endl;
 
     return 0;
+#endif // _GTEST
 }

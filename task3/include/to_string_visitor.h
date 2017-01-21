@@ -40,5 +40,19 @@ struct to_string_visitor
     std::ostream& _out;
 };
 
+inline
+std::ostream& operator<<(std::ostream& out, vertex& expr) {
+    to_string_visitor string_visitor(out);
+    expr.accept(&string_visitor);
 
+    return out;
+}
 
+inline
+std::string to_string_ver(vertex& expr) {
+    std::stringstream ss;
+    to_string_visitor string_visitor(ss);
+    expr.accept(&string_visitor);
+
+    return ss.str();
+}

@@ -1,4 +1,3 @@
-y a [a := \f . f xi'']
 ------HW1--------------
 x \x . x x \x . x y
 \a . b a
@@ -14,3 +13,4 @@ x \x . x x \x . x y [a := x x x \x . x x \x . x y]
 ( \xzxcv . (( ( jlk''' ) ( xzxv ) ) ( ( \b . (( ( a ( b c ) ) ( d ) ) ( ( \e . (( \u . (( \g . (( ( u ) ( f ) ) ( g ))))))) ))) ))) [a := a]
 \xzxcv . jlk''' xzxv \b  . a b c d \e . \u . \g . u f g [a := a]
 \a . b a [b := \x . x y]
+x [x := y]
