@@ -3,7 +3,6 @@
 //
 
 #include <memory>
-#include <cassert>
 #include <sstream>
 
 #include "to_string_visitor.h"
@@ -49,7 +48,7 @@ namespace hw4 {
         } else if (lambda_ptr_t lam = std::dynamic_pointer_cast<lambda>(expr)) {
             lam->_r_child = to_normal(lam->_r_child);
         } else {
-            assert(std::dynamic_pointer_cast<variable>(expr));
+//            assert(std::dynamic_pointer_cast<variable>(expr));
         }
 
         return res;

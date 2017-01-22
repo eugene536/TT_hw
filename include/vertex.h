@@ -6,13 +6,19 @@
 
 #include <memory>
 
+template<typename T>
+using ptr = std::shared_ptr<T>;
+
 struct vertex {
     virtual ~vertex() {}
     virtual void accept(struct visitor * visitor) = 0;
-};
 
-template<typename T>
-using ptr = std::shared_ptr<T>;
+    ptr<vertex> deep_copy_ptr() {
+        return ptr<vertex>(deep_copy());
+    }
+
+    virtual vertex * deep_copy() const = 0;
+};
 
 typedef ptr<vertex> vertex_ptr_t;
 
@@ -21,3 +27,6 @@ ptr<RetT> make_ptr(Args&&... args) {
     return std::make_shared<RetT>(std::forward<Args>(args)...);
 }
 
+
+std::string generate_var();
+void clear_var_generator();

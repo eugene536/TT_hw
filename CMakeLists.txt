@@ -25,7 +25,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3 -g -march=native -ffast-m
 
 #add_definitions(-D_LINUX)
 #add_definitions(-DNDEBUG)
-add_definitions(-D_GLIBCXX_DEBUG)
+#add_definitions(-D_GLIBCXX_DEBUG)
 add_definitions(-DDEBUG)
 include_directories(include)
 

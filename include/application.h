@@ -14,6 +14,7 @@ struct application
     application(vertex_ptr_t l_child, vertex_ptr_t r_child);
 
     virtual void accept(struct visitor * visitor);
+    application * deep_copy() const override;
 
     vertex_ptr_t _l_child;
     vertex_ptr_t _r_child;

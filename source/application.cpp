@@ -14,3 +14,7 @@ void application::accept(visitor * visitor) {
     visitor->visit(this);
 }
 
+application * application::deep_copy() const {
+    return new application(_l_child->deep_copy_ptr(), _r_child->deep_copy_ptr());
+}
+

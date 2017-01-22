@@ -27,3 +27,16 @@ namespace hw1 {
     }
 
 } // namespace hw1
+
+namespace {
+    int gen_var = 0;
+}
+
+void clear_var_generator() {
+    gen_var = 0;
+}
+
+std::string generate_var() {
+    gen_var++;
+    return "a" + std::to_string(gen_var);
+}

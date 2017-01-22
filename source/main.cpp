@@ -51,7 +51,6 @@ hw_main * hw_mains[] = {
 };
 
 int main(int argc, char * argv[]) {
-
 #ifdef _GTEST
     std::cout << "Run tests..." << std::endl;
     ::testing::InitGoogleTest(&argc, argv);
@@ -63,8 +62,10 @@ int main(int argc, char * argv[]) {
     int task_num = std::stoi(task_number) - 1;
 
     ifstream in(in_file(task_number));
-    string expr((istreambuf_iterator<char>(in)),
-                 istreambuf_iterator<char>());
+    string expr;
+    getline(in, expr);
+//    string expr((istreambuf_iterator<char>(in)),
+//                 istreambuf_iterator<char>());
 
     std::cerr << "initial expression: " << std::endl;
     print_expr(expr);

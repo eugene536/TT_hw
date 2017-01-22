@@ -13,6 +13,7 @@ struct variable
 {
     variable(std::string name);
     virtual void accept(struct visitor * visitor);
+    variable * deep_copy() const override;
 
     std::string _name;
 };

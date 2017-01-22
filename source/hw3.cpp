@@ -7,8 +7,6 @@
 #include <set>
 #include <substitute_visitor.h>
 
-#include "hw3.h"
-
 namespace hw3 {
     std::string main(std::string const &expr) {
         char const *f = expr.c_str();
@@ -39,9 +37,10 @@ namespace hw3 {
 //        std::cerr << "  var: " << *var << std::endl;
 //        std::cerr << "  new_expr: " << *new_expr << std::endl;
 
-        substitute_visitor visitor(var, new_expr);
+        substitute_visitor visitor(var, expr, new_expr);
         expr->accept(&visitor);
 
+//        std::cerr << "after subst: " << *visitor._res << std::endl;
         return visitor._res;
     }
 } // namespace hw3

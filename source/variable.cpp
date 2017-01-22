@@ -12,3 +12,7 @@ variable::variable(std::string name)
 void variable::accept(visitor * visitor) {
     visitor->visit(this);
 }
+
+variable * variable::deep_copy() const {
+    return new variable(_name);
+}
