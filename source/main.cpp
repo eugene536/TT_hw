@@ -4,8 +4,8 @@
 #  include <gtest/gtest.h>
 #endif
 
-#include "parser.h"
-#include "print_visitor.h"
+#include "lambda/parser.h"
+#include "lambda/print_visitor.h"
 #include "hw1.h"
 #include "hw2.h"
 #include "hw3.h"

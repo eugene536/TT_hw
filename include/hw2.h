@@ -6,7 +6,7 @@
 
 #include <set>
 
-#include "vertex.h"
+#include "lambda/vertex.h"
 
 namespace hw2 {
     std::string main(std::string const & expr);

@@ -2,8 +2,8 @@
 // Created by eugene on 1/7/17.
 //
 
-#include "application.h"
-#include "visitor.h"
+#include "lambda/application.h"
+#include "lambda/visitor.h"
 
 application::application(vertex_ptr_t l_child, vertex_ptr_t r_child)
         : _l_child(l_child)

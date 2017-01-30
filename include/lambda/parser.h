@@ -9,7 +9,7 @@
 
 #include "variable.h"
 
-namespace parser {
+namespace lambda_parser {
     void skip_spaces(char const *&s);
     void skip(char c, char const *& f);
     void skip(std::string const & str, char const *& f);

@@ -5,7 +5,7 @@
 #include <sstream>
 
 #include "hw2.h"
-#include "free_visitor.h"
+#include "lambda/free_visitor.h"
 
 namespace hw2 {
 

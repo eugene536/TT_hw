@@ -6,7 +6,7 @@
 
 #include <memory>
 
-#include "vertex.h"
+#include "lambda/vertex.h"
 
 struct application
     : vertex

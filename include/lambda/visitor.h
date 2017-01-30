@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include "parser.h"
+#include "lambda/parser.h"
 #include "lambda.h"
 #include "application.h"
-#include "variable.h"
+#include "lambda/variable.h"
 
 struct visitor {
     virtual ~visitor() {}

@@ -7,7 +7,7 @@
 
 #include <gtest/gtest.h>
 
-#include "to_string_visitor.h"
+#include "lambda/to_string_visitor.h"
 #include "hw3.h"
 
 std::string convert(std::string const & in) {

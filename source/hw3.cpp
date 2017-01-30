@@ -5,7 +5,7 @@
 #include <memory>
 #include <sstream>
 #include <set>
-#include <substitute_visitor.h>
+#include <lambda/substitute_visitor.h>
 
 namespace hw3 {
     std::string main(std::string const &expr) {
@@ -14,13 +14,13 @@ namespace hw3 {
 
         vertex_ptr_t expr_tree(parse(f, l));
 
-        parser::skip('[', f);
-        variable_ptr_t var(parser::variable_grammar(f));
+        lambda_parser::skip('[', f);
+        variable_ptr_t var(lambda_parser::variable_grammar(f));
 
-        parser::skip(":=", f);
+        lambda_parser::skip(":=", f);
         vertex_ptr_t new_expr(parse(f, l));
 
-        parser::skip(']', f);
+        lambda_parser::skip(']', f);
 
         std::stringstream ss;
         to_string_visitor string_visitor(ss);

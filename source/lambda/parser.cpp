@@ -4,11 +4,11 @@
 
 #include <bits/stdc++.h>
 
-#include "parser.h"
-#include "application.h"
-#include "lambda.h"
+#include "lambda/parser.h"
+#include "lambda/application.h"
+#include "lambda/lambda.h"
 
-namespace parser {
+namespace lambda_parser {
     using std::set;
     using std::string;
 
@@ -124,10 +124,10 @@ namespace parser {
         skip_spaces(s);
         return res;
     }
-} // namespace parser
+} // namespace lambda_parser
 
 vertex_ptr_t parse(char const *&f, char const *l) {
     assert(f && l && f < l);
-    return parser::expression_grammar(f);
+    return lambda_parser::expression_grammar(f);
 }
 

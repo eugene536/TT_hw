@@ -6,7 +6,7 @@
 
 #include <string>
 
-#include "parser.h"
+#include "lambda/parser.h"
 
 namespace hw4 {
     std::string main(std::string const &expr);

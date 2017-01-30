@@ -4,10 +4,7 @@
 
 #pragma once
 
-#include <memory>
-
-template<typename T>
-using ptr = std::shared_ptr<T>;
+#include "lambda/pointer.h"
 
 struct vertex {
     virtual ~vertex() {}
@@ -21,12 +18,6 @@ struct vertex {
 };
 
 typedef ptr<vertex> vertex_ptr_t;
-
-template<typename RetT, typename ...Args>
-ptr<RetT> make_ptr(Args&&... args) {
-    return std::make_shared<RetT>(std::forward<Args>(args)...);
-}
-
 
 std::string generate_var();
 void clear_var_generator();

@@ -6,7 +6,7 @@
 
 #include <string>
 
-#include "vertex.h"
+#include "lambda/vertex.h"
 
 struct variable
     : vertex

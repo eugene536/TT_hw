@@ -2,8 +2,8 @@
 // Created by eugene on 1/7/17.
 //
 
-#include "variable.h"
-#include "visitor.h"
+#include "lambda/variable.h"
+#include "lambda/visitor.h"
 
 variable::variable(std::string name)
     : _name(name)

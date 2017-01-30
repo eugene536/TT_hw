@@ -6,7 +6,7 @@
 #include <set>
 #include <string>
 
-#include "visitor.h"
+#include "lambda/visitor.h"
 
 struct free_visitor
     : visitor

@@ -2,8 +2,8 @@
 // Created by eugene on 1/7/17.
 //
 
-#include "lambda.h"
-#include "visitor.h"
+#include "lambda/lambda.h"
+#include "lambda/visitor.h"
 
 lambda::lambda(variable_ptr_t var, vertex_ptr_t r_child)
         : _var(var)

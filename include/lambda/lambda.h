@@ -6,8 +6,8 @@
 
 #include <memory>
 
-#include "vertex.h"
-#include "variable.h"
+#include "lambda/vertex.h"
+#include "lambda/variable.h"
 
 struct lambda
         : vertex
