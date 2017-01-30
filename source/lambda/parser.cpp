@@ -27,7 +27,10 @@ namespace lambda_parser {
     void skip(char c, char const *& f) {
         skip_spaces(f);
 
-        assert(c == *f);
+        if (c != *f) {
+            std::cerr << "not matched: c = " << c << "; f = " << f << std::endl;
+            exit(EXIT_FAILURE);
+        }
         f++;
 
         skip_spaces(f);
@@ -97,7 +100,7 @@ namespace lambda_parser {
     vertex_ptr_t expression_grammar(const char *&s) {
         skip_spaces(s);
 
-        vertex_ptr_t res;
+        vertex_ptr_t res(nullptr);
         if (isatom(*s)) {
             res = application_grammar(s);
         }

@@ -25,6 +25,84 @@ namespace equation {
         return _children.empty();
     }
 
+    bool vertex::contains_var(std::string const & var) const {
+        bool contains = _name == var;
+
+        for (auto const & child: _children) {
+            contains = child->contains_var(var);
+
+            if (contains) {
+                break;
+            }
+        }
+
+        return contains;
+    }
+
+    bool vertex::substitute(std::string const &var, vertex_ptr_t const & expr) {
+        bool substituted = false;
+
+        if (var == _name) {
+            _name = expr->_name;
+
+            for (auto const & c: expr->_children) {
+                _children.push_back(c->deep_copy());
+            }
+
+            substituted = true;
+        } else {
+            for (vertex_ptr_t &v: _children) {
+                if (v->is_variable()) {
+                    if (var == v->_name) {
+                        v = expr->deep_copy();
+                        substituted = true;
+                    }
+                } else {
+                    substituted |= v->substitute(var, expr);
+                }
+            }
+        }
+
+        return substituted;
+    }
+
+    vertex_ptr_t vertex::deep_copy() const {
+        vertex_ptr_t copy = make_ptr<vertex>(_name);
+
+        if (!is_variable()) {
+            for (vertex_ptr_t const & v: _children) {
+                copy->_children.push_back(v->deep_copy());
+            }
+        }
+
+        return copy;
+    }
+
+    bool vertex::operator==(vertex const & rhs) const {
+        bool res = true;
+
+        if (_name == rhs._name) {
+            if (_children.size() == rhs._children.size()) {
+                for (size_t i = 0; i < _children.size(); ++i) {
+                    if (_children[i] != rhs._children[i]) {
+                        res = false;
+                        break;
+                    }
+                }
+            } else {
+                res = false;
+            }
+        } else {
+            res = false;
+        }
+
+        return res;
+    }
+
+    bool vertex::operator!=(vertex const & rhs) const {
+        return !(*this == rhs);
+    }
+
     std::ostream& operator<<(std::ostream& out, vertex const & ver) {
         if (ver._children.empty()) {
             return out << ver._name;

@@ -12,6 +12,8 @@
 #include "lambda/pointer.h"
 
 namespace equation {
+    typedef ptr<struct vertex> vertex_ptr_t;
+
     struct vertex {
         vertex();
 
@@ -19,13 +21,21 @@ namespace equation {
 
         bool is_variable() const;
 
+        bool contains_var(std::string const & var) const;
+
+        bool substitute(std::string const & var, vertex_ptr_t const & expr);
+
+        vertex_ptr_t deep_copy() const;
+
         std::string to_string() const;
 
-        std::string _name;
-        std::vector<ptr<vertex>> _children;
-    };
+        bool operator==(vertex const & rhs) const;
 
-    typedef ptr<vertex> vertex_ptr_t;
+        bool operator!=(vertex const & rhs) const;
+
+        std::string _name;
+        std::vector<vertex_ptr_t> _children;
+    };
 
     std::ostream& operator<<(std::ostream& out, vertex const & ver);
 }

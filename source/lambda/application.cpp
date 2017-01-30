@@ -2,6 +2,7 @@
 // Created by eugene on 1/7/17.
 //
 
+#include <cassert>
 #include "lambda/application.h"
 #include "lambda/visitor.h"
 
@@ -15,6 +16,9 @@ void application::accept(visitor * visitor) {
 }
 
 application * application::deep_copy() const {
+    assert(_l_child != nullptr);
+    assert(_r_child != nullptr);
     return new application(_l_child->deep_copy_ptr(), _r_child->deep_copy_ptr());
+//    return new application(nullptr, nullptr);
 }
 

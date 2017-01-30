@@ -10,6 +10,7 @@
 #include "hw2.h"
 #include "hw3.h"
 #include "hw4.h"
+#include "hw5.h"
 
 using namespace std;
 
@@ -47,7 +48,8 @@ hw_main * hw_mains[] = {
         hw1::main,
         hw2::main,
         hw3::main,
-        hw4::main
+        hw4::main,
+        hw5::main
 };
 
 int main(int argc, char * argv[]) {

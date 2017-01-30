@@ -6,6 +6,7 @@
 #include <gtest/gtest.h>
 
 #include "equation/parser.h"
+#include "hw5.h"
 
 struct equation_parser_f
     : ::testing::Test
@@ -41,6 +42,66 @@ TEST_F(equation_parser_f, complex_functions) {
     lhs = "f(g(x, y, a(x, y, z)), z)";
     rhs = "h(y, b(j, k, i, i))";
     test();
+}
+
+TEST(hw5, trivial_just_vars) {
+    std::string const eq = "x = y";
+
+    std::string res = hw5::main(eq);
+
+    ASSERT_EQ(res, "x = y\n");
+}
+
+TEST(hw5, trivial_with_function) {
+    std::string const eq = "f(y, g(z))  =  x  ";
+
+    std::string res = hw5::main(eq);
+
+    ASSERT_EQ(res, "x = f(y, g(z))\n");
+}
+
+TEST(hw5, simple_equation) {
+    std::string const eq = "f(y, g(z))  =  f(x, y)";
+
+    std::string res = hw5::main(eq);
+
+    ASSERT_EQ(res, "y = g(z)\n"
+                   "x = g(z)\n");
+}
+
+TEST(hw5, more_dificult_equation) {
+    std::string const eq = "f(x, g(y)) = f(e(g(f(t, z))), t)";
+
+    std::string res = hw5::main(eq);
+
+    ASSERT_EQ(res, "t = g(y)\n"
+                   "x = e(g(f(g(y), z)))\n");
+}
+
+TEST(hw5, dificult_equation) {
+    std::string const eq = "f(f(x,g(y)),f(e(g(f(t,z))),t))=f(m,m)";
+
+    std::string res = hw5::main(eq);
+
+    ASSERT_EQ(res, "m = f(e(g(f(g(y), z))), g(y))\n"
+                   "t = g(y)\n"
+                   "x = e(g(f(g(y), z)))\n");
+}
+
+TEST(hw5, simple_system_equation) {
+    std::string const eq = "f(g(z, y), h(x, x)) = u\n"
+                           "u = f(v, w)\n"
+                           "v = g(t, f(m, m))\n"
+                           "w = h(y, y)";
+
+    std::string res = hw5::main(eq);
+
+    ASSERT_EQ(res, "u = f(g(z, f(m, m)), h(f(m, m), f(m, m)))\n"
+                   "w = h(f(m, m), f(m, m))\n"
+                   "v = g(z, f(m, m))\n"
+                   "x = f(m, m)\n"
+                   "y = f(m, m)\n"
+                   "t = z\n");
 }
 
 #endif // _GTEST
