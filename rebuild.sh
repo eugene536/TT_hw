@@ -1,6 +1,7 @@
 #!/bin/bash
+rm -rf build
+mkdir build
 cd build
-rm -rf *
 GTEST=y cmake ../
 GTEST=y make
 cd ..
