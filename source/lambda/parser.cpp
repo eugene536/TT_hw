@@ -134,3 +134,10 @@ vertex_ptr_t parse(char const *&f, char const *l) {
     return lambda_parser::expression_grammar(f);
 }
 
+vertex_ptr_t parse(std::string const &expr) {
+    char const * f = expr.data();
+    char const * l = f + expr.size();
+
+    return parse(f, l);
+}
+

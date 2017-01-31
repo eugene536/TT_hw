@@ -3,6 +3,7 @@
 //
 
 #include <sstream>
+#include <cassert>
 
 #include "equation/parser.h"
 
@@ -101,6 +102,20 @@ namespace equation {
 
     bool vertex::operator!=(vertex const & rhs) const {
         return !(*this == rhs);
+    }
+
+    std::string vertex::to_suffix_string() const {
+        std::string res;
+        if (_children.empty()) {
+            res = _name;
+        } else {
+            assert(_children.size() == 2);
+            res += "(" + _children.front()->to_suffix_string();
+            res += _name;
+            res += _children.back()->to_suffix_string() + ")";
+        }
+
+        return res;
     }
 
     std::ostream& operator<<(std::ostream& out, vertex const & ver) {

@@ -11,6 +11,7 @@
 #include "hw3.h"
 #include "hw4.h"
 #include "hw5.h"
+#include "hw6.h"
 
 using namespace std;
 
@@ -49,7 +50,8 @@ hw_main * hw_mains[] = {
         hw2::main,
         hw3::main,
         hw4::main,
-        hw5::main
+        hw5::main,
+        hw6::main
 };
 
 int main(int argc, char * argv[]) {
@@ -64,12 +66,12 @@ int main(int argc, char * argv[]) {
     int task_num = std::stoi(task_number) - 1;
 
     ifstream in(in_file(task_number));
-    string expr;
-    getline(in, expr);
-//    string expr((istreambuf_iterator<char>(in)),
-//                 istreambuf_iterator<char>());
+//    string expr;
+//    getline(in, expr);
+    string expr((istreambuf_iterator<char>(in)),
+                 istreambuf_iterator<char>());
 
-    std::cerr << "initial expression: " << std::endl;
+    std::cerr << "initial expression: " << expr << std::endl;
     print_expr(expr);
     hw_main * spec_main = hw_mains[task_num];
 

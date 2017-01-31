@@ -23,4 +23,5 @@ namespace lambda_parser {
     variable_ptr_t variable_grammar(const char *&s);
 }
 
+vertex_ptr_t parse(std::string const & expr);
 vertex_ptr_t parse(char const *&f, char const *l);
