@@ -85,14 +85,23 @@ namespace hw6 {
 
         } else if (lambda_ptr_t lam = my_dynamic_cast<lambda>(ver)) {
             system_with_type in_lam = generate_system(lam->_r_child);
-            assert(in_lam._var2type.count(lam->_var->_name));
+            if (!in_lam._var2type.count(lam->_var->_name)) {
+                g_num++;
+                std::string new_type = "t" + std::to_string(g_num);
+                in_lam._var2type[lam->_var->_name] = make_ptr<equation::vertex>(new_type);
+            }                
             equation::vertex_ptr_t lam_t = in_lam._var2type[lam->_var->_name];
 
             res._result_type = make_ptr<equation::vertex>("->", lam_t, in_lam._result_type);
             res._var2type = std::move(in_lam._var2type);
             res._system = std::move(in_lam._system);
             res._var2type.erase(lam->_var->_name);
-
+#if 0
+            } else {
+                std::cerr << "Can't  type expr: " << lam->_var->_name << std::endl;
+                exit(EXIT_FAILURE);
+            }
+#endif
         } else if (variable_ptr_t var = my_dynamic_cast<variable>(ver)) {
             g_num++;
             std::string new_type = "t" + std::to_string(g_num);

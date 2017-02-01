@@ -71,8 +71,8 @@ int main(int argc, char * argv[]) {
     string expr((istreambuf_iterator<char>(in)),
                  istreambuf_iterator<char>());
 
-    std::cerr << "initial expression: " << expr << std::endl;
-    print_expr(expr);
+//    std::cerr << "initial expression: " << expr << std::endl;
+//    print_expr(expr);
     hw_main * spec_main = hw_mains[task_num];
 
     ofstream out(out_file(task_number));
