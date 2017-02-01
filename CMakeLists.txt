@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.8)
 
 IF ("$ENV{GTEST}" STREQUAL "y")
     MESSAGE("!Gtests're enabled!")
-#    add_definitions(-D_GTEST)
+    add_definitions(-D_GTEST)
 
     find_package(GTest REQUIRED)
     include_directories(${GTEST_INCLUDE_DIRS})
