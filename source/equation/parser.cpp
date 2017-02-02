@@ -116,7 +116,7 @@ namespace equation {
         return substituted;
     }
 
-    bool simplify(equation_t &eq) {
+    bool simplify(equation_t &eq, equation_system_t& system) {
         vertex_ptr_t &lhs = eq.first;
         vertex_ptr_t &rhs = eq.second;
         bool simplified = false;
@@ -129,6 +129,12 @@ namespace equation {
 
         if (lhs->is_variable()) {
             if (!rhs->contains_var(lhs->_name)) {
+                if (g_var2expr.count(lhs->_name)) {
+                    auto& t = g_var2expr[lhs->_name];
+                    if (*t == *rhs) {
+                        return false;
+                    }
+                }
                 simplified |= do_subst(rhs);
 
                 if (0 == g_var2expr.count(lhs->_name)) {
@@ -136,9 +142,18 @@ namespace equation {
                 } else {
                     vertex_ptr_t & new_expr = g_var2expr[lhs->_name];
                     if (rhs != new_expr) {
-                        eq.first = new_expr;
+                        bool flag = true;
+                        for (auto& p: system) {
+                            if (*(p.first) == *(eq.second) && *(p.second) == *new_expr) {
+                                flag = false;
+                                break;
+                            }
+                        }
+
+                        if (flag) {
+                            system.push_back(std::make_pair(eq.second, new_expr));
+                        }
                         simplified = true;
-                        simplify(eq);
                     }
                 }
             } else if (*lhs != *rhs) {
@@ -176,7 +191,7 @@ namespace equation {
                 vertex_ptr_t &lhs = eq.first;
                 vertex_ptr_t &rhs = eq.second;
                 bool erase_need = false;
-                progress |= simplify(eq);
+                progress |= simplify(eq, solution);
 
                 if (!lhs->is_variable()) {
                     if (!rhs->is_variable()) {
