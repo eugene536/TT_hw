@@ -89,7 +89,7 @@ namespace hw6 {
                 g_num++;
                 std::string new_type = "t" + std::to_string(g_num);
                 in_lam._var2type[lam->_var->_name] = make_ptr<equation::vertex>(new_type);
-            }
+            }                
             equation::vertex_ptr_t lam_t = in_lam._var2type[lam->_var->_name];
 
             res._result_type = make_ptr<equation::vertex>("->", lam_t, in_lam._result_type);

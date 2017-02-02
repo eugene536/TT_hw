@@ -116,7 +116,7 @@ namespace equation {
         return substituted;
     }
 
-    bool simplify(equation_t &eq, equation_system_t& system) {
+    bool simplify(equation_t &eq) {
         vertex_ptr_t &lhs = eq.first;
         vertex_ptr_t &rhs = eq.second;
         bool simplified = false;
@@ -129,32 +129,18 @@ namespace equation {
 
         if (lhs->is_variable()) {
             if (!rhs->contains_var(lhs->_name)) {
-                if (g_var2expr.count(lhs->_name)) {
-                    auto& t = g_var2expr[lhs->_name];
-                    if (*t == *rhs) {
-                        return false;
-                    }
-                }
-                simplified |= do_subst(rhs);
-
                 if (0 == g_var2expr.count(lhs->_name)) {
                     g_var2expr[lhs->_name] = rhs;
-                } else {
-                    vertex_ptr_t & new_expr = g_var2expr[lhs->_name];
-                    if (rhs != new_expr) {
-                        bool flag = true;
-                        for (auto& p: system) {
-                            if (*(p.first) == *(eq.second) && *(p.second) == *new_expr) {
-                                flag = false;
-                                break;
-                            }
-                        }
 
-                        if (flag) {
-                            system.push_back(std::make_pair(eq.second, new_expr));
-                        }
+                    simplified |= do_subst(rhs);
+                } else {
+                    vertex_ptr_t &new_expr = g_var2expr[lhs->_name];
+                    if (rhs != new_expr) {
+                        eq.first = new_expr->deep_copy();
                         simplified = true;
                     }
+
+                    simplified |= do_subst(rhs);
                 }
             } else if (*lhs != *rhs) {
                 std::cerr << "bad equation, right side contains variable from left: " << std::endl;
@@ -191,7 +177,7 @@ namespace equation {
                 vertex_ptr_t &lhs = eq.first;
                 vertex_ptr_t &rhs = eq.second;
                 bool erase_need = false;
-                progress |= simplify(eq, solution);
+                progress |= simplify(eq);
 
                 if (!lhs->is_variable()) {
                     if (!rhs->is_variable()) {
@@ -204,7 +190,7 @@ namespace equation {
 
                                 if (l_chs != r_chs) {
                                     for (size_t ch_pos = 0; ch_pos < l_chs.size(); ++ch_pos) {
-                                        solution.push_back({l_chs[ch_pos], r_chs[ch_pos]});
+                                        solution.push_back({l_chs[ch_pos]->deep_copy(), r_chs[ch_pos]->deep_copy()});
                                     }
                                 }
 
@@ -217,9 +203,15 @@ namespace equation {
 
                                 exit(EXIT_FAILURE);
                             }
+                        } else {
+                            std::cerr << "bad equation, function doesn't match: " << std::endl;
+                            std::cerr << "lhs: " << *lhs << std::endl;
+                            std::cerr << "rhs: " << *rhs << std::endl;
+
+                            exit(EXIT_FAILURE);
                         }
                     } else {
-                        std::cerr << "bad equation, function doesn't match: " << std::endl;
+                        std::cerr << "something go wrong" << std::endl;
                         std::cerr << "lhs: " << *lhs << std::endl;
                         std::cerr << "rhs: " << *rhs << std::endl;
 
